@@ -6,6 +6,8 @@ import { useAuth } from '../contexts/AuthContext';
 import '@material/web/list/list.js';
 import '@material/web/list/list-item.js';
 import '@material/web/iconbutton/icon-button.js';
+import '@material/web/chips/suggestion-chip.js';
+import '@material/web/chips/chip-set.js';
 import '@material/web/icon/icon.js';
 import '@material/web/progress/circular-progress.js';
 import '@material/web/button/filled-tonal-button.js';
@@ -41,6 +43,25 @@ const matchesRule = (email: ParsedEmail, rule: Rule): boolean => {
 };
 
 const Dashboard: React.FC<{ searchQuery?: string; isDark?: boolean }> = ({ searchQuery = '', isDark = false }) => {
+    // Color mapping for rule colors to accent hex
+    const colorAccentMap: Record<string, string> = {
+        'bg-blue-pastel': '#2196F3',
+        'bg-blue-soft': '#2196F3',
+        'bg-green-pastel': '#4CAF50',
+        'bg-green-soft': '#4CAF50',
+        'bg-purple-pastel': '#673ab7',
+        'bg-purple-soft': '#673ab7',
+        'bg-pink-pastel': '#E91E63',
+        'bg-pink-soft': '#E91E63',
+        'bg-orange-soft': '#ff9800',
+        'bg-red-soft': '#f44336',
+    };
+
+    // Get matching rules for an email
+    const getMatchingRules = React.useCallback((email: ParsedEmail) => {
+        return activeRules.filter(rule => matchesRule(email, rule));
+    }, [activeRules]);
+
     const { isGapiReady, logout, user } = useAuth();
     const [loading, setLoading] = useState(true);
     const [emails, setEmails] = useState<ParsedEmail[]>([]);
@@ -293,6 +314,28 @@ const Dashboard: React.FC<{ searchQuery?: string; isDark?: boolean }> = ({ searc
                                         <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                             {email.institution}
                                         </div>
+                                        {/* Rule tag chips */}
+                                        {(() => {
+                                            const matching = getMatchingRules(email);
+                                            if (matching.length === 0) return null;
+                                            return (
+                                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginTop: '6px' }}>
+                                                    {matching.map(rule => (
+                                                        // @ts-ignore
+                                                        <md-suggestion-chip
+                                                            key={rule.id}
+                                                            label={rule.tag}
+                                                            style={{
+                                                                '--md-suggestion-chip-container-height': '24px',
+                                                                '--md-suggestion-chip-label-text-size': '0.7rem',
+                                                                '--md-suggestion-chip-outline-color': colorAccentMap[rule.color] || '#888',
+                                                                '--md-suggestion-chip-label-text-color': colorAccentMap[rule.color] || '#888',
+                                                            } as React.CSSProperties}
+                                                        />
+                                                    ))}
+                                                </div>
+                                            );
+                                        })()}
                                     </div>
                                     <div style={{ marginLeft: '12px', textAlign: 'right', flexShrink: 0 }}>
                                         <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>
