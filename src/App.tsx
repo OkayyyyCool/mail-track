@@ -4,6 +4,7 @@ import ThemeToggle from './components/ThemeToggle';
 import { useAuth } from './contexts/AuthContext';
 import Dashboard from './components/Dashboard';
 import Rules from './components/Rules';
+import { useInstallPrompt } from './hooks/useInstallPrompt';
 import '@material/web/divider/divider.js';
 // styles.css imported in main.tsx
 
@@ -14,6 +15,8 @@ import '@material/web/textfield/outlined-text-field.js';
 
 function App() {
   const { user, logout } = useAuth();
+  const { isInstallable, promptInstall } = useInstallPrompt();
+  const [showInstallBanner, setShowInstallBanner] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [showProfile, setShowProfile] = useState(false);
   const [activeTab, setActiveTab] = useState(() => {
@@ -82,6 +85,55 @@ function App() {
 
   return (
     <div className="app-container">
+      {/* PWA Install Banner */}
+      {isInstallable && showInstallBanner && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          background: 'linear-gradient(135deg, #4285F4, #7B1FA2)',
+          color: '#fff',
+          padding: '12px 20px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '12px',
+          fontSize: '0.9rem',
+          fontWeight: 500,
+          boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+        }}>
+          <span>📱 Install MailTrack for a better experience</span>
+          <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+            <button
+              onClick={promptInstall}
+              style={{
+                background: '#fff',
+                color: '#4285F4',
+                border: 'none',
+                borderRadius: '20px',
+                padding: '6px 16px',
+                fontWeight: 600,
+                fontSize: '0.85rem',
+                cursor: 'pointer',
+              }}
+            >Install</button>
+            <button
+              onClick={() => setShowInstallBanner(false)}
+              style={{
+                background: 'transparent',
+                color: '#fff',
+                border: '1px solid rgba(255,255,255,0.4)',
+                borderRadius: '20px',
+                padding: '6px 12px',
+                fontSize: '0.85rem',
+                cursor: 'pointer',
+              }}
+            >✕</button>
+          </div>
+        </div>
+      )}
       {/* Material Header */}
       <header className="glass-header" style={{
         background: 'var(--header-bg)',

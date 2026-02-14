@@ -5,6 +5,7 @@ import '@material/web/button/filled-button.js';
 import '@material/web/button/text-button.js';
 import '@material/web/icon/icon.js';
 import '@material/web/iconbutton/icon-button.js';
+import '@material/web/radio/radio.js';
 
 interface RuleEditorProps {
     initialRule?: Rule;
@@ -89,44 +90,37 @@ const RuleEditor: React.FC<RuleEditorProps> = ({ initialRule, onSave, onCancel }
 
                     {/* Theme Selection */}
                     <div>
-                        <label className="editor-label" style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Card Theme</label>
-                        <div className="chips-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                            {colors.map(c => {
-                                const isSelected = color === c.id;
-                                return (
-                                    <button
-                                        key={c.id}
+                        <label className="editor-label" style={{ display: 'block', marginBottom: '12px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Card Theme</label>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}>
+                            {colors.map(c => (
+                                <label
+                                    key={c.id}
+                                    style={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        gap: '4px',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    {/* @ts-ignore */}
+                                    <md-radio
+                                        name="card-theme"
+                                        value={c.id}
+                                        checked={color === c.id ? true : undefined}
                                         onClick={() => setColor(c.id)}
-                                        title={c.label}
                                         style={{
-                                            width: '42px',
-                                            height: '42px',
-                                            borderRadius: '50%',
-                                            border: isSelected ? `3px solid ${c.accent}` : '2px solid transparent',
-                                            background: c.bg,
-                                            cursor: 'pointer',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            boxShadow: isSelected ? `0 0 0 2px ${c.accent}40` : 'none',
-                                            transition: 'all 0.2s ease',
-                                            position: 'relative',
-                                            padding: 0,
-                                        }}
-                                    >
-                                        {/* Inner dot */}
-                                        <span style={{
-                                            width: '18px',
-                                            height: '18px',
-                                            borderRadius: '50%',
-                                            background: c.accent,
-                                            display: 'block',
-                                            opacity: isSelected ? 1 : 0.6,
-                                            transition: 'opacity 0.2s ease',
-                                        }} />
-                                    </button>
-                                );
-                            })}
+                                            '--md-radio-icon-color': c.accent,
+                                            '--md-radio-selected-icon-color': c.accent,
+                                            '--md-radio-hover-icon-color': c.accent,
+                                            '--md-radio-focus-icon-color': c.accent,
+                                            '--md-radio-pressed-icon-color': c.accent,
+                                            '--md-radio-icon-size': '24px',
+                                        } as React.CSSProperties}
+                                    />
+                                    <span style={{ fontSize: '0.7rem', color: c.accent, fontWeight: 500, opacity: color === c.id ? 1 : 0.7 }}>{c.label}</span>
+                                </label>
+                            ))}
                         </div>
                     </div>
 

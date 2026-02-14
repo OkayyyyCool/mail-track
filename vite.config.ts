@@ -8,18 +8,28 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+      includeAssets: ['mailtrack-icon.png'],
       manifest: {
-        name: 'MBA Tracker',
-        short_name: 'MBA Tracker',
-        description: 'Track your MBA applications and emails',
-        theme_color: '#ffffff',
+        name: 'MailTrack',
+        short_name: 'MailTrack',
+        description: 'Track and organize your emails intelligently',
+        theme_color: '#4285F4',
+        background_color: '#ffffff',
+        display: 'standalone',
+        start_url: '/mail-track/',
+        scope: '/mail-track/',
         icons: [
           {
-            src: 'pwa-icon.svg',
-            sizes: '192x192 512x512',
-            type: 'image/svg+xml',
-            purpose: 'any maskable'
+            src: 'mailtrack-icon.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: 'mailtrack-icon.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable'
           }
         ]
       },
