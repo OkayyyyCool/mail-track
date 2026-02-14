@@ -43,11 +43,11 @@ const RuleEditor: React.FC<RuleEditorProps> = ({ initialRule, onSave, onCancel }
     };
 
     const colors = [
-        { id: 'bg-blue-pastel', label: 'Blue', class: 'chip-blue' },
-        { id: 'bg-green-pastel', label: 'Green', class: 'chip-green' },
-        { id: 'bg-purple-pastel', label: 'Purple', class: 'chip-purple' },
-        { id: 'bg-pink-pastel', label: 'Pink', class: 'chip-red' },
-        { id: 'bg-orange-soft', label: 'Orange', class: 'chip-orange' },
+        { id: 'bg-blue-pastel', label: 'Blue', bg: '#E3F2FD', accent: '#2196F3' },
+        { id: 'bg-green-pastel', label: 'Green', bg: '#E8F5E9', accent: '#4CAF50' },
+        { id: 'bg-purple-pastel', label: 'Purple', bg: '#ede7f6', accent: '#673ab7' },
+        { id: 'bg-pink-pastel', label: 'Pink', bg: '#FCE4EC', accent: '#E91E63' },
+        { id: 'bg-orange-soft', label: 'Orange', bg: '#fff3e0', accent: '#ff9800' },
     ];
 
     // Helper to handle input changes for Web Components
@@ -75,7 +75,7 @@ const RuleEditor: React.FC<RuleEditorProps> = ({ initialRule, onSave, onCancel }
                         placeholder="e.g. Interview"
                         value={tag}
                         onInput={handleInput(setTag)}
-                        style={{ width: '100%' }}
+                        style={{ width: '100%', '--md-outlined-text-field-container-shape': '16px' } as React.CSSProperties}
                     />
 
                     {/* Description */}
@@ -84,30 +84,49 @@ const RuleEditor: React.FC<RuleEditorProps> = ({ initialRule, onSave, onCancel }
                         placeholder="Short description"
                         value={description}
                         onInput={handleInput(setDescription)}
-                        style={{ width: '100%' }}
+                        style={{ width: '100%', '--md-outlined-text-field-container-shape': '16px' } as React.CSSProperties}
                     />
 
                     {/* Theme Selection */}
                     <div>
                         <label className="editor-label" style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Card Theme</label>
-                        <div className="chips-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                            {colors.map(c => (
-                                <button
-                                    key={c.id}
-                                    className={`chip-btn ${c.class} ${color === c.id ? 'active' : ''}`}
-                                    onClick={() => setColor(c.id)}
-                                    style={{
-                                        padding: '6px 16px',
-                                        borderRadius: '20px',
-                                        border: color === c.id ? '2px solid #000' : '1px solid #ddd',
-                                        background: 'transparent',
-                                        cursor: 'pointer',
-                                        fontWeight: 500
-                                    }}
-                                >
-                                    {c.label}
-                                </button>
-                            ))}
+                        <div className="chips-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                            {colors.map(c => {
+                                const isSelected = color === c.id;
+                                return (
+                                    <button
+                                        key={c.id}
+                                        onClick={() => setColor(c.id)}
+                                        title={c.label}
+                                        style={{
+                                            width: '42px',
+                                            height: '42px',
+                                            borderRadius: '50%',
+                                            border: isSelected ? `3px solid ${c.accent}` : '2px solid transparent',
+                                            background: c.bg,
+                                            cursor: 'pointer',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            boxShadow: isSelected ? `0 0 0 2px ${c.accent}40` : 'none',
+                                            transition: 'all 0.2s ease',
+                                            position: 'relative',
+                                            padding: 0,
+                                        }}
+                                    >
+                                        {/* Inner dot */}
+                                        <span style={{
+                                            width: '18px',
+                                            height: '18px',
+                                            borderRadius: '50%',
+                                            background: c.accent,
+                                            display: 'block',
+                                            opacity: isSelected ? 1 : 0.6,
+                                            transition: 'opacity 0.2s ease',
+                                        }} />
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
 
@@ -121,7 +140,7 @@ const RuleEditor: React.FC<RuleEditorProps> = ({ initialRule, onSave, onCancel }
                         placeholder="e.g. Call Letter"
                         value={subject}
                         onInput={handleInput(setSubject)}
-                        style={{ width: '100%' }}
+                        style={{ width: '100%', '--md-outlined-text-field-container-shape': '16px' } as React.CSSProperties}
                     />
 
                     <md-outlined-text-field
@@ -129,7 +148,7 @@ const RuleEditor: React.FC<RuleEditorProps> = ({ initialRule, onSave, onCancel }
                         placeholder="e.g. @iima.ac.in"
                         value={from}
                         onInput={handleInput(setFrom)}
-                        style={{ width: '100%' }}
+                        style={{ width: '100%', '--md-outlined-text-field-container-shape': '16px' } as React.CSSProperties}
                     />
 
                     <md-outlined-text-field
@@ -137,7 +156,7 @@ const RuleEditor: React.FC<RuleEditorProps> = ({ initialRule, onSave, onCancel }
                         placeholder="e.g. shortlist"
                         value={includes}
                         onInput={handleInput(setIncludes)}
-                        style={{ width: '100%' }}
+                        style={{ width: '100%', '--md-outlined-text-field-container-shape': '16px' } as React.CSSProperties}
                     />
 
                     <md-outlined-text-field
@@ -145,7 +164,7 @@ const RuleEditor: React.FC<RuleEditorProps> = ({ initialRule, onSave, onCancel }
                         placeholder="e.g. noreply@spam.com"
                         value={excludeFrom}
                         onInput={handleInput(setExcludeFrom)}
-                        style={{ width: '100%' }}
+                        style={{ width: '100%', '--md-outlined-text-field-container-shape': '16px' } as React.CSSProperties}
                         error={false}
                         supporting-text="Emails from this sender will be hidden"
                     />
