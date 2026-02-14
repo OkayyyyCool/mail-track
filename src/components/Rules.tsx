@@ -54,7 +54,7 @@ const Rules: React.FC = () => {
         setIsEditing(false);
     };
 
-    const getPastelClass = (tag: string, index: number) => {
+    const getPastelClass = (index: number) => {
         // Cycle through pastel colors based on index or tag
         const colors = ['bg-purple-pastel', 'bg-pink-pastel', 'bg-green-pastel', 'bg-blue-pastel'];
         return colors[index % colors.length];
@@ -68,7 +68,7 @@ const Rules: React.FC = () => {
                 {rules.map((rule, index) => (
                     <div key={rule.id} className="rule-row">
                         {/* Card */}
-                        <div className={`rule-card ${getPastelClass(rule.tag, index)}`}>
+                        <div className={`rule-card ${getPastelClass(index)}`}>
                             {/* Floating "Window" content */}
                             <h3 className="rule-title">{rule.tag.replace('_', ' ')}</h3>
 

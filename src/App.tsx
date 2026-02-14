@@ -57,7 +57,7 @@ function App() {
 
       {/* Main Content Area */}
       <main className="main-content">
-        {activeTab === 'home' && <Dashboard isDark={isDark} />}
+        {activeTab === 'home' && <Dashboard />}
         {activeTab === 'rules' && <Rules />}
         {activeTab === 'profile' && <Profile />}
       </main>

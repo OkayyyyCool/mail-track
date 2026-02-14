@@ -1,6 +1,5 @@
 import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { ArrowRight, Mail } from 'lucide-react';
 
 const Login: React.FC = () => {
     const { login, isLoading } = useAuth();

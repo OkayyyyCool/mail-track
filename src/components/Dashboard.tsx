@@ -6,11 +6,7 @@ import { Calendar, Building2, ChevronRight, ChevronLeft, CheckCircle2, AlertCirc
 import { useAuth } from '../contexts/AuthContext';
 import SummaryCards from './SummaryCards';
 
-interface DashboardProps {
-    isDark?: boolean;
-}
-
-const Dashboard: React.FC<DashboardProps> = ({ isDark }) => {
+const Dashboard: React.FC = () => {
     const { isGapiReady, logout } = useAuth();
     const [loading, setLoading] = useState(true);
     const [emails, setEmails] = useState<ParsedEmail[]>([]);
@@ -55,9 +51,9 @@ const Dashboard: React.FC<DashboardProps> = ({ isDark }) => {
                 const excludeRules = rules.filter(r => r.criteria?.excludeFrom && r.isActive);
 
                 if (excludeRules.length > 0) {
-                    filtered = sorted.filter(email => {
+                    filtered = sorted.filter((email: ParsedEmail) => {
                         // Check if email matches any exclude rule
-                        const shouldExclude = excludeRules.some(rule => {
+                        const shouldExclude = excludeRules.some((rule: any) => {
                             const excludePattern = rule.criteria.excludeFrom.toLowerCase();
                             return email.sender.toLowerCase().includes(excludePattern);
                         });
