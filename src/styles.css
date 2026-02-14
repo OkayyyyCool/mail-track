@@ -1,0 +1,1373 @@
+:root {
+  /* Pastel Palette - Daily Task Theme */
+  --bg-body: #FAFAFA;
+  --bg-card: #FFFFFF;
+
+  /* Text Colors */
+  --text-primary: #1D1D1D;
+  --text-secondary: #8E8E93;
+  --text-tertiary: #C7C7CC;
+
+  /* Accent Colors (Pastels) */
+  --accent-yellow-bg: #FFF9E6;
+  --accent-yellow-text: #FFC107;
+
+  --accent-green-bg: #E8F5E9;
+  --accent-green-text: #4CAF50;
+
+  --accent-purple-bg: #EDE7F6;
+  --accent-purple-text: #673AB7;
+
+  --accent-blue-bg: #E3F2FD;
+  --accent-blue-text: #2196F3;
+
+  --accent-red-bg: #FFEBEE;
+  --accent-red-text: #F44336;
+
+  --primary-blue: #007AFF;
+  /* iOS Blue */
+
+  /* Shadows */
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.03);
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.06);
+
+  /* Radius */
+  --radius-xl: 32px;
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 8px;
+
+  --safe-area-top: env(safe-area-inset-top);
+  --safe-area-bottom: env(safe-area-inset-bottom);
+}
+
+/* Dark Mode Overrides */
+body.dark-mode {
+  --bg-body: #121212;
+  --bg-card: #1E1E1E;
+  --glass-bg: rgba(30, 30, 30, 0.8);
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0A0A0;
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.4);
+
+  --accent-yellow-bg: #2C250E;
+  --accent-green-bg: #1B2E1E;
+  --accent-purple-bg: #221B2E;
+  --accent-blue-bg: #1A2633;
+  --accent-red-bg: #2E1A1A;
+
+  /* Specific Card Colors for Rules - Dark Pastel */
+  --bg-purple-pastel: #2D2638;
+  --bg-pink-pastel: #382626;
+  --bg-green-pastel: #263829;
+  --bg-blue-pastel: #263038;
+}
+
+body.dark-mode .rule-card {
+  background-color: var(--bg-card);
+  /* Fallback or use specific pastel vars above if linked */
+}
+
+body.dark-mode .bg-purple-pastel {
+  background-color: var(--bg-purple-pastel);
+}
+
+body.dark-mode .bg-pink-pastel {
+  background-color: var(--bg-pink-pastel);
+}
+
+body.dark-mode .bg-green-pastel {
+  background-color: var(--bg-green-pastel);
+}
+
+body.dark-mode .bg-blue-pastel {
+  background-color: var(--bg-blue-pastel);
+}
+
+/* Dark Mode Soft Colors for Email Cards */
+body.dark-mode .bg-blue-soft {
+  background-color: rgba(33, 150, 243, 0.2);
+  color: #64B5F6;
+}
+
+body.dark-mode .bg-green-soft {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #81C784;
+}
+
+body.dark-mode .bg-orange-soft {
+  background-color: rgba(255, 193, 7, 0.2);
+  color: #FFD54F;
+}
+
+body.dark-mode .bg-red-soft {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: #E57373;
+}
+
+
+/* Toggle Component Styles */
+.theme-toggle-wrapper {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.theme-toggle-switch {
+  position: relative;
+  width: 52px;
+  height: 28px;
+  background: #E5E5EA;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+  transition: background 0.3s;
+}
+
+.theme-toggle-switch.dark {
+  background: #2C2C2E;
+}
+
+.toggle-icon {
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+}
+
+.toggle-circle {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  z-index: 1;
+}
+
+/* Move circle explicitly */
+.theme-toggle-switch.dark .toggle-circle {
+  transform: translateX(24px);
+  background: #3A3A3C;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: calc(80px + var(--safe-area-bottom));
+  /* Space for bottom nav */
+}
+
+/* Glass Layout Containers */
+.glass-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--backdrop-blur));
+  -webkit-backdrop-filter: blur(var(--backdrop-blur));
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: calc(1rem + var(--safe-area-top)) 1.5rem 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Glass Bottom Dock - Reshaped to Pill */
+.bottom-nav {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  min-width: 280px;
+  background: #1D1D1D;
+  /* Black Pill Background */
+  border-radius: 100px;
+  display: flex;
+  justify-content: space-between;
+  padding: 6px;
+  z-index: 1000;
+  gap: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #8E8E93;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 12px 20px;
+  border-radius: 100px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex: 1;
+  white-space: nowrap;
+}
+
+.nav-item span {
+  display: none;
+  /* Hide text by default to save space */
+}
+
+/* Show text only for active item if needed, but for 3 items icon only might be cleaner. 
+   Let's try showing text for all or just active? 
+   The design shows "Task List" and "Completed" both with text. 
+   Let's enable text. */
+.nav-item span {
+  display: inline-block;
+}
+
+.nav-item.active {
+  background: #FFFFFF;
+  /* White Pill Active */
+  color: #1D1D1D;
+  transform: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-item.active::after {
+  content: none;
+  /* Remove the dot */
+}
+
+/* Dashboard Content */
+.dashboard-content {
+  padding: 1.5rem;
+  max-width: 600px;
+  /* Mobile focused max-width */
+  margin: 0 auto;
+}
+
+/* Summary Cards Row */
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  /* Space for scrollbar if needed */
+  scrollbar-width: none;
+  /* Hide scrollbar Firefox */
+}
+
+.summary-row::-webkit-scrollbar {
+  display: none;
+  /* Hide scrollbar Chrome */
+}
+
+.summary-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  padding: 1rem;
+  min-width: 80px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  aspect-ratio: 1/1.1;
+  /* Slightly taller than square */
+}
+
+.summary-icon-wrapper {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.summary-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.summary-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Section Header */
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+/* Email List Card */
+.email-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.email-card:active {
+  transform: scale(0.98);
+}
+
+.card-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.card-info {
+  flex: 1;
+  min-width: 0;
+  /* Text truncation fix */
+}
+
+.card-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.sender-name {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.time-ago {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.email-subject-line {
+  font-size: 0.9rem;
+  color: #3a3a3c;
+  margin: 0 0 6px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tags-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.status-tag {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* Utility Classes for Colors */
+.bg-blue-soft {
+  background-color: var(--primary-blue-soft);
+  color: var(--primary-blue);
+}
+
+.bg-green-soft {
+  background-color: var(--success-green-soft);
+  color: var(--success-green);
+}
+
+.bg-orange-soft {
+  background-color: var(--warning-orange-soft);
+  color: var(--warning-orange);
+}
+
+.bg-red-soft {
+  background-color: var(--danger-red-soft);
+  color: var(--danger-red);
+}
+
+/* Login Page Styles - Walkthrough Theme */
+/* Login Page Styles - Walkthrough Theme */
+.login-page {
+  min-height: 100vh;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-hero-section {
+  position: relative;
+  height: 65vh;
+  /* Top 2/3rds */
+  background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+  /* Deep Black Theme */
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  /* Align wave to bottom */
+}
+
+.hero-pattern-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.1;
+  background-image: radial-gradient(#ffffff 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.hero-wave {
+  width: 100%;
+  display: block;
+  height: auto;
+  margin-bottom: -1px;
+  /* Fix potential sub-pixel gap */
+}
+
+.login-content-wrapper {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: calc(2rem + var(--safe-area-bottom));
+}
+
+.login-text-area {
+  margin-top: 1rem;
+}
+
+/* Hide legacy elements */
+.login-top-curve,
+.login-content,
+.login-hero-image {
+  display: none;
+}
+
+/* Rules Timeline UI */
+.rules-container {
+  padding-bottom: 200px;
+  /* Increased to clear FAB */
+  position: relative;
+  min-height: 100%;
+}
+
+.rule-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.rule-card {
+  flex: 1;
+  border-radius: 24px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: none;
+  /* Flat pastel as per image */
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.rule-card:active {
+  transform: scale(0.98);
+}
+
+/* Specific Card Colors */
+.bg-purple-pastel {
+  background-color: #F3F0FF;
+}
+
+.bg-pink-pastel {
+  background-color: #FFF0F0;
+}
+
+.bg-green-pastel {
+  background-color: #E8F5E9;
+}
+
+.bg-blue-pastel {
+  background-color: #E3F2FD;
+}
+
+.rule-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+  text-transform: capitalize;
+  margin-bottom: 4px;
+}
+
+.rule-desc {
+  font-size: 0.95rem;
+  color: #555;
+  /* Slightly darker for readability */
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.rule-meta {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rule-edit-btn-outside {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
+  align-self: center;
+  /* Center vertically with card */
+}
+
+.rule-edit-btn-outside:active {
+  background: #F2F2F7;
+  transform: scale(0.95);
+}
+
+/* Floating Action Button - Dark Circle + */
+.fab-add {
+  position: fixed;
+  bottom: 110px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #0F172A;
+  /* Deep Navy */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  border: none;
+  cursor: pointer;
+  z-index: 100;
+}
+
+/* Spin Animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-anim {
+  animation: spin 1s linear infinite;
+}
+
+/* Rule Editor - DeFi Style Modal */
+.editor-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  display: flex;
+  align-items: flex-end;
+  /* Mobile bottom sheet style or center */
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.editor-card {
+  background: white;
+  width: 100%;
+  max-width: 420px;
+  height: 90vh;
+  /* Tall modal */
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+}
+
+@media (min-width: 480px) {
+  .editor-overlay {
+    align-items: center;
+  }
+
+  .editor-card {
+    height: auto;
+    max-height: 85vh;
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.editor-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1D1D1D;
+}
+
+.editor-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1D1D1D;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.editor-desc {
+  font-size: 0.8rem;
+  color: #8E8E93;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+/* Input Fields Style */
+.input-group-row {
+  background: #F3F4F6;
+  border-radius: 16px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.input-icon-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.editor-input {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1D1D1D;
+  flex: 1;
+  outline: none;
+  width: 100%;
+}
+
+.editor-input::placeholder {
+  color: #9CA3AF;
+}
+
+
+
+/* Action Circle Button (Email List) */
+.action-circle-btn {
+  width: 32px;
+  height: 32px;
+  background: #1D1D1D;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.action-circle-btn:active {
+  transform: scale(0.95);
+}
+
+/* Email Detail Modal */
+.email-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 3000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  /* Mobile sheet */
+  backdrop-filter: blur(5px);
+}
+
+/* Dark Mode Overrides for Rule Editor */
+body.dark-mode .editor-card {
+  background: #1E1E1E;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .editor-title {
+  color: #FFFFFF;
+}
+
+body.dark-mode .editor-label {
+  color: #FFFFFF;
+}
+
+body.dark-mode .editor-desc {
+  color: #A0A0A0;
+}
+
+body.dark-mode .input-group-row {
+  background: #2C2C2E;
+}
+
+body.dark-mode .input-icon-circle {
+  background: #3A3A3C;
+  color: #FFFFFF;
+}
+
+body.dark-mode .editor-input {
+  color: #FFFFFF;
+}
+
+body.dark-mode .editor-input::placeholder {
+  color: #71717A;
+}
+
+/* Dark Mode Overrides for Email Modal */
+body.dark-mode .email-modal-card {
+  background: #1E1E1E;
+}
+
+body.dark-mode .mail-subject {
+  color: #FFFFFF;
+}
+
+body.dark-mode .sender-name {
+  color: #FFFFFF;
+}
+
+body.dark-mode .mail-date {
+  color: #A0A0A0;
+}
+
+body.dark-mode .mail-back-btn {
+  color: #FFFFFF;
+}
+
+body.dark-mode .mail-tag-badge {
+  background: #2C2C2E;
+  color: #A0A0A0;
+  border: 1px solid #3A3A3C;
+}
+
+/* Mail Body Container Dark Mode */
+body.dark-mode .mail-body-container {
+  background: #1E1E1E;
+  /* Ensure container matches */
+}
+
+body.dark-mode .icon-btn-plain {
+  color: #FFFFFF;
+}
+
+body.dark-mode .save-btn {
+  background: #FFFFFF;
+  color: #000000;
+}
+
+/* Base Styles Update for Editor */
+.icon-btn-plain {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #1D1D1D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-icon-circle {
+  /* ... existing props ... */
+  color: #666;
+  /* Default light mode icon color */
+}
+
+.input-label-small {
+  font-size: 0.75rem;
+  color: #8E8E93;
+  margin-bottom: 2px;
+}
+
+.save-btn {
+  margin-top: 24px;
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  background: #1D1D1D;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.save-btn:active {
+  transform: scale(0.98);
+}
+
+.chips-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.chip-btn {
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  background: #F2F2F7;
+  color: #1D1D1D;
+  transition: all 0.2s;
+}
+
+.chip-btn.active {
+  border-color: #1D1D1D;
+  background: #FFF;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Chip Colors */
+.chip-blue.active {
+  background: #E3F2FD;
+  color: #2196F3;
+  border-color: #2196F3;
+}
+
+.chip-green.active {
+  background: #E8F5E9;
+  color: #4CAF50;
+  border-color: #4CAF50;
+}
+
+.chip-purple.active {
+  background: #ede7f6;
+  color: #673ab7;
+  border-color: #673ab7;
+}
+
+.chip-red.active {
+  background: #ffebee;
+  color: #f44336;
+  border-color: #f44336;
+}
+
+.chip-orange.active {
+  background: #fff3e0;
+  color: #ff9800;
+  border-color: #ff9800;
+}
+
+/* Mail View UI - Reference Design */
+.email-modal-card {
+  background: white;
+  width: 100%;
+  height: 100%;
+  /* Full screen */
+  border-radius: 0;
+  /* No radius */
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: none;
+  overflow: hidden;
+}
+
+@media(min-width: 480px) {
+  .email-modal-card {
+    height: 100vh;
+    border-radius: 0;
+    max-width: none;
+  }
+}
+
+.mail-view-header {
+  padding: 24px 24px 16px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.mail-back-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #1D1D1D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+  /* Align with text */
+}
+
+.mail-subject {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+  color: #1D1D1D;
+  flex: 1;
+}
+
+.mail-tag-badge {
+  background: #F2F2F7;
+  color: #8E8E93;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.mail-sender-row {
+  padding: 0 24px 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #F2F2F7;
+}
+
+.sender-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #E3F2FD;
+  /* Soft Blue */
+  color: #2196F3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.sender-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sender-name-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.sender-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #1D1D1D;
+}
+
+.sender-email {
+  font-size: 0.85rem;
+  color: #8E8E93;
+}
+
+.mail-date {
+  font-size: 0.8rem;
+  color: #8E8E93;
+}
+
+.mail-body-container {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  background: white;
+}
+
+.mail-attachments {
+  padding: 0 24px 16px 24px;
+}
+
+.attachment-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #E5E5EA;
+  border-radius: 12px;
+  background: #FAFAFA;
+}
+
+.att-icon-placeholder {
+  width: 32px;
+  height: 40px;
+  background: #FFEBEE;
+  color: #F44336;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.att-info {
+  flex: 1;
+}
+
+.att-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1D1D1D;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.att-size {
+  font-size: 0.75rem;
+  color: #8E8E93;
+}
+
+.mail-actions-bar {
+  padding: 16px 24px 32px 24px;
+  /* Bottom padding for safe area */
+  display: flex;
+  gap: 12px;
+  border-top: 1px solid #F2F2F7;
+  background: white;
+}
+
+.mail-action-btn {
+  flex: 1;
+  height: 48px;
+  border-radius: 24px;
+  border: 1px solid #E5E5EA;
+  background: white;
+  color: #1D1D1D;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.mail-action-btn:active {
+  background: #F2F2F7;
+}
+
+/* Profile Page Styles */
+.profile-page {
+  padding: 1.5rem;
+  padding-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-header-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.profile-avatar-large {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 16px;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background-image: url('https://i.pravatar.cc/300?img=32');
+  /* Mock */
+}
+
+.profile-name-large {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.profile-email-large {
+  font-size: 0.9rem;
+  color: #8E8E93;
+  margin-bottom: 32px;
+}
+
+/* Stats Row */
+.profile-stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.stat-box {
+  background: white;
+  border-radius: 24px;
+  padding: 16px;
+  width: 90px;
+  height: 90px;
+  /* Square-ish */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s;
+}
+
+.stat-box.active {
+  background: #1D1D1D;
+  /* Black as per request/dock */
+  color: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+}
+
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #8E8E93;
+}
+
+.stat-box.active .stat-label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Menu List */
+.profile-menu-container {
+  background: white;
+  border-radius: 24px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+}
+
+.profile-menu-item {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  border-bottom: 1px solid #F5F5F5;
+  transition: background 0.1s;
+}
+
+.profile-menu-item:last-child {
+  border-bottom: none;
+}
+
+.profile-menu-item:active {
+  background: #FAFAFA;
+}
+
+.menu-icon-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+}
+
+.menu-text-content {
+  flex: 1;
+}
+
+.menu-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.menu-subtitle {
+  font-size: 0.75rem;
+  color: #8E8E93;
+}
+
+/* Google Sign-In Button */
+.google-signin-btn {
+  width: 100%;
+  max-width: 320px;
+  height: 56px;
+  background: #131314;
+  /* Google Dark Background */
+  border-radius: 28px;
+  /* Pill shape */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px solid #5f6368;
+  cursor: pointer;
+  margin-top: auto;
+  transition: background 0.2s, transform 0.1s;
+  align-self: flex-end;
+  /* Right align to match flow */
+}
+
+.google-signin-btn:hover {
+  background: #303134;
+}
+
+.google-signin-btn:active {
+  transform: scale(0.98);
+}
+
+.google-icon-wrapper {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.google-icon-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.google-btn-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Floating Gmail Dock - Circular Button */
+.floating-gmail-dock {
+  position: absolute;
+  bottom: 32px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.gmail-dock-btn {
+  pointer-events: auto;
+  background: #000000;
+  /* Deep Black */
+  width: 64px;
+  height: 64px;
+  /* Larger circular button */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s, background 0.2s;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gmail-dock-btn:hover {
+  transform: scale(1.05);
+  background: #1a1a1a;
+}
+
+.gmail-dock-btn:active {
+  transform: scale(0.95);
+}

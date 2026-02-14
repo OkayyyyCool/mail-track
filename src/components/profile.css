@@ -1,0 +1,132 @@
+/* Profile Page Styles - Dedicated File */
+.profile-page {
+    padding: 1.5rem;
+    padding-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #FAFAFA;
+    min-height: 100vh;
+}
+
+
+
+.profile-avatar-large {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 16px;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background-color: #eee;
+}
+
+.profile-name-large {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1D1D1D;
+    margin-bottom: 4px;
+}
+
+.profile-email-large {
+    font-size: 0.9rem;
+    color: #8E8E93;
+    margin-bottom: 32px;
+}
+
+/* Stats Row */
+
+
+/* Menu List */
+.profile-menu-container {
+    background: white;
+    border-radius: 24px;
+    width: 100%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.profile-menu-item {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    border-bottom: 1px solid #F5F5F5;
+}
+
+.profile-menu-item:last-child {
+    border-bottom: none;
+}
+
+.menu-icon-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+}
+
+.menu-text-content {
+    flex: 1;
+}
+
+.menu-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1D1D1D;
+    margin-bottom: 2px;
+}
+
+.menu-subtitle {
+    font-size: 0.75rem;
+    color: #8E8E93;
+}
+
+.force-logout-btn {
+    margin-top: 20px;
+    padding: 12px 24px;
+    background: #FFEBEE;
+    color: #F44336;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* Dark Mode Overrides for Profile */
+body.dark-mode .profile-page {
+    background-color: #121212;
+}
+
+body.dark-mode .profile-name-large {
+    color: #FFFFFF;
+}
+
+body.dark-mode .profile-menu-container {
+    background: #1E1E1E;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .profile-menu-item {
+    border-bottom: 1px solid #2C2C2E;
+}
+
+body.dark-mode .menu-title {
+    color: #FFFFFF;
+}
+
+body.dark-mode .menu-subtitle {
+    color: #A0A0A0;
+}
+
+body.dark-mode .force-logout-btn {
+    background: #382626;
+    /* Dark mode red soft bg */
+    color: #FF5252;
+}
