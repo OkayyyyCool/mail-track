@@ -43,6 +43,17 @@ const matchesRule = (email: ParsedEmail, rule: Rule): boolean => {
 };
 
 const Dashboard: React.FC<{ searchQuery?: string; isDark?: boolean }> = ({ searchQuery = '', isDark = false }) => {
+    const { isGapiReady, logout, user } = useAuth();
+    const [loading, setLoading] = useState(true);
+    const [emails, setEmails] = useState<ParsedEmail[]>([]);
+    const [activeRules, setActiveRules] = useState<Rule[]>([]);
+
+    // Stats state - dynamic map of rule tag -> count
+    const [stats, setStats] = useState<Record<string, number>>({});
+
+    const [filter, setFilter] = useState<string>('all');
+    const [showDetails, setShowDetails] = useState(false);
+
     // Color mapping for rule colors to accent hex
     const colorAccentMap: Record<string, string> = {
         'bg-blue-pastel': '#2196F3',
@@ -61,17 +72,6 @@ const Dashboard: React.FC<{ searchQuery?: string; isDark?: boolean }> = ({ searc
     const getMatchingRules = React.useCallback((email: ParsedEmail) => {
         return activeRules.filter(rule => matchesRule(email, rule));
     }, [activeRules]);
-
-    const { isGapiReady, logout, user } = useAuth();
-    const [loading, setLoading] = useState(true);
-    const [emails, setEmails] = useState<ParsedEmail[]>([]);
-    const [activeRules, setActiveRules] = useState<Rule[]>([]);
-
-    // Stats state - dynamic map of rule tag -> count
-    const [stats, setStats] = useState<Record<string, number>>({});
-
-    const [filter, setFilter] = useState<string>('all');
-    const [showDetails, setShowDetails] = useState(false);
 
     const filteredEmails = React.useMemo(() => {
         let result = emails;
