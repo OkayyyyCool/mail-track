@@ -26,7 +26,7 @@ const Login: React.FC = () => {
             padding: '0 24px',
         }}>
             {/* Top spacer */}
-            <div style={{ flex: 1 }} />
+            <div style={{ flex: 0.7 }} />
 
             {/* Center content — Icon + Title */}
             <div style={{
@@ -37,8 +37,8 @@ const Login: React.FC = () => {
             }}>
                 {/* App Icon */}
                 <div style={{
-                    width: '120px',
-                    height: '120px',
+                    width: '160px',
+                    height: '160px',
                 }}>
                     <img
                         src={import.meta.env.BASE_URL + 'mailtrack-icon.png'}
@@ -65,18 +65,16 @@ const Login: React.FC = () => {
                 </h1>
             </div>
 
-            {/* Bottom spacer */}
-            <div style={{ flex: 1 }} />
+            {/* Spacer between content and button */}
+            <div style={{ flex: 0.3 }} />
 
-            {/* Bottom section — Sign In button */}
+            {/* Sign In button — at ~2/3 from top */}
             <div style={{
                 width: '100%',
                 maxWidth: '360px',
-                paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 48px)',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: '16px',
             }}>
                 <button
                     onClick={() => login()}
@@ -113,6 +111,9 @@ const Login: React.FC = () => {
                     Sign in with Google
                 </button>
             </div>
+
+            {/* Bottom spacer */}
+            <div style={{ flex: 1 }} />
         </div>
     );
 };
