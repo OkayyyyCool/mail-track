@@ -1,5 +1,6 @@
 import React from 'react';
-import { Sun, Moon } from 'lucide-react';
+import '@material/web/switch/switch.js';
+import '@material/web/icon/icon.js';
 import '../styles.css';
 
 interface ThemeToggleProps {
@@ -9,16 +10,19 @@ interface ThemeToggleProps {
 
 const ThemeToggle: React.FC<ThemeToggleProps> = ({ isDark, toggle }) => {
     return (
-        <div className="theme-toggle-wrapper" onClick={toggle}>
-            <div className={`theme-toggle-switch ${isDark ? 'dark' : 'light'}`}>
-                <div className="toggle-icon sun">
-                    <Sun size={14} color={isDark ? '#8E8E93' : '#FDB813'} />
-                </div>
-                <div className="toggle-icon moon">
-                    <Moon size={14} color={isDark ? '#FFFFFF' : '#8E8E93'} />
-                </div>
-                <div className="toggle-circle" />
-            </div>
+        <div className="theme-toggle-wrapper">
+            {/* @ts-ignore */}
+            <md-switch
+                selected={isDark}
+                onClick={toggle}
+                icons
+                show-only-selected-icon
+            >
+                {/* @ts-ignore */}
+                <md-icon slot="on-icon">dark_mode</md-icon>
+                {/* @ts-ignore */}
+                <md-icon slot="off-icon">light_mode</md-icon>
+            </md-switch>
         </div>
     );
 };

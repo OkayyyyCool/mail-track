@@ -162,7 +162,7 @@ body.dark-mode .bg-red-soft {
 
 body {
   margin: 0;
-  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Montserrat, Helvetica, Arial, sans-serif;
   background-color: var(--bg-body);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
@@ -1331,7 +1331,7 @@ body.dark-mode .save-btn {
   font-size: 1.1rem;
   font-weight: 500;
   color: white;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* Floating Gmail Dock - Circular Button */

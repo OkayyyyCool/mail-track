@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-import { ArrowLeft, MoreVertical, Tag, Type, Mail } from 'lucide-react';
 import { type Rule } from '../types/Rule';
+import '@material/web/textfield/outlined-text-field.js';
+import '@material/web/button/filled-button.js';
+import '@material/web/button/text-button.js';
+import '@material/web/icon/icon.js';
+import '@material/web/iconbutton/icon-button.js';
 
 interface RuleEditorProps {
     initialRule?: Rule;
@@ -46,138 +50,113 @@ const RuleEditor: React.FC<RuleEditorProps> = ({ initialRule, onSave, onCancel }
         { id: 'bg-orange-soft', label: 'Orange', class: 'chip-orange' },
     ];
 
+    // Helper to handle input changes for Web Components
+    const handleInput = (setter: React.Dispatch<React.SetStateAction<string>>) => (e: React.FormEvent<HTMLElement>) => {
+        const target = e.target as HTMLInputElement;
+        setter(target.value);
+    };
+
     return (
         <div className="editor-overlay">
-            <div className="editor-card">
+            <div className="editor-card" style={{ maxWidth: '500px', width: '90%', maxHeight: '90vh', overflowY: 'auto', padding: '24px', borderRadius: '28px' }}>
                 {/* Header */}
-                {/* Header */}
-                <div className="editor-header">
-                    <button onClick={onCancel} className="icon-btn-plain">
-                        <ArrowLeft size={24} />
-                    </button>
-                    <span className="editor-title">{initialRule ? 'Edit Rule' : 'New Rule'}</span>
-                    <button className="icon-btn-plain">
-                        <MoreVertical size={24} />
-                    </button>
+                <div className="editor-header" style={{ marginBottom: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <h2 className="editor-title" style={{ margin: 0, fontSize: '1.5rem' }}>{initialRule ? 'Edit Rule' : 'New Rule'}</h2>
+                    <md-icon-button onClick={onCancel}>
+                        <md-icon>close</md-icon>
+                    </md-icon-button>
                 </div>
 
-                {/* Tag Name */}
-                <label className="editor-label">Rule Name</label>
-                <div className="input-group-row">
-                    <div className="input-icon-circle">
-                        <Tag size={16} />
-                    </div>
-                    <input
-                        type="text"
-                        className="editor-input"
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+
+                    {/* Tag Name */}
+                    <md-outlined-text-field
+                        label="Rule Name"
                         placeholder="e.g. Interview"
                         value={tag}
-                        onChange={(e) => setTag(e.target.value)}
+                        onInput={handleInput(setTag)}
+                        style={{ width: '100%' }}
                     />
-                </div>
 
-                {/* Description */}
-                <div className="input-group-row">
-                    <div className="input-icon-circle">
-                        <Type size={16} />
-                    </div>
-                    <input
-                        type="text"
-                        className="editor-input"
+                    {/* Description */}
+                    <md-outlined-text-field
+                        label="Description"
                         placeholder="Short description"
                         value={description}
-                        onChange={(e) => setDescription(e.target.value)}
+                        onInput={handleInput(setDescription)}
+                        style={{ width: '100%' }}
                     />
-                </div>
 
-                {/* Theme Selection */}
-                <label className="editor-label" style={{ marginTop: '16px' }}>Card Theme</label>
-                <p className="editor-desc">Select a color for the rule card.</p>
-                <div className="chips-row">
-                    {colors.map(c => (
-                        <button
-                            key={c.id}
-                            className={`chip-btn ${c.class} ${color === c.id ? 'active' : ''}`}
-                            onClick={() => setColor(c.id)}
-                        >
-                            {c.label}
-                        </button>
-                    ))}
-                </div>
+                    {/* Theme Selection */}
+                    <div>
+                        <label className="editor-label" style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Card Theme</label>
+                        <div className="chips-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                            {colors.map(c => (
+                                <button
+                                    key={c.id}
+                                    className={`chip-btn ${c.class} ${color === c.id ? 'active' : ''}`}
+                                    onClick={() => setColor(c.id)}
+                                    style={{
+                                        padding: '6px 16px',
+                                        borderRadius: '20px',
+                                        border: color === c.id ? '2px solid #000' : '1px solid #ddd',
+                                        background: 'transparent',
+                                        cursor: 'pointer',
+                                        fontWeight: 500
+                                    }}
+                                >
+                                    {c.label}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
 
-                {/* Criteria Inputs */}
-                <label className="editor-label">Match Conditions</label>
-                <p className="editor-desc">Define what emails should be caught by this rule.</p>
+                    <md-divider />
 
-                <div className="input-group-row">
-                    <div className="input-icon-circle">
-                        <Mail size={16} />
-                    </div>
-                    <div style={{ flex: 1 }}>
-                        <div className="input-label-small">Subject contains</div>
-                        <input
-                            type="text"
-                            className="editor-input"
-                            placeholder="e.g. Call Letter"
-                            value={subject}
-                            onChange={(e) => setSubject(e.target.value)}
-                        />
-                    </div>
-                </div>
+                    {/* Criteria Inputs */}
+                    <h3 style={{ fontSize: '1.1rem', margin: '8px 0' }}>Match Conditions</h3>
 
-                <div className="input-group-row">
-                    <div className="input-icon-circle">
-                        <Mail size={16} />
-                    </div>
-                    <div style={{ flex: 1 }}>
-                        <div className="input-label-small">Sender (From)</div>
-                        <input
-                            type="text"
-                            className="editor-input"
-                            placeholder="e.g. @iima.ac.in"
-                            value={from}
-                            onChange={(e) => setFrom(e.target.value)}
-                        />
-                    </div>
-                </div>
+                    <md-outlined-text-field
+                        label="Subject contains"
+                        placeholder="e.g. Call Letter"
+                        value={subject}
+                        onInput={handleInput(setSubject)}
+                        style={{ width: '100%' }}
+                    />
 
-                <div className="input-group-row">
-                    <div className="input-icon-circle">
-                        <Mail size={16} />
-                    </div>
-                    <div style={{ flex: 1 }}>
-                        <div className="input-label-small">Exclude Sender</div>
-                        <input
-                            type="text"
-                            className="editor-input"
-                            placeholder="e.g. noreply@spam.com"
-                            value={excludeFrom}
-                            onChange={(e) => setExcludeFrom(e.target.value)}
-                        />
-                    </div>
-                </div>
+                    <md-outlined-text-field
+                        label="Sender (From)"
+                        placeholder="e.g. @iima.ac.in"
+                        value={from}
+                        onInput={handleInput(setFrom)}
+                        style={{ width: '100%' }}
+                    />
 
-                <div className="input-group-row">
-                    <div className="input-icon-circle">
-                        <Type size={16} />
-                    </div>
-                    <div style={{ flex: 1 }}>
-                        <div className="input-label-small">Includes words</div>
-                        <input
-                            type="text"
-                            className="editor-input"
-                            placeholder="e.g. shortlist"
-                            value={includes}
-                            onChange={(e) => setIncludes(e.target.value)}
-                        />
+                    <md-outlined-text-field
+                        label="Includes words"
+                        placeholder="e.g. shortlist"
+                        value={includes}
+                        onInput={handleInput(setIncludes)}
+                        style={{ width: '100%' }}
+                    />
+
+                    <md-outlined-text-field
+                        label="Exclude Sender"
+                        placeholder="e.g. noreply@spam.com"
+                        value={excludeFrom}
+                        onInput={handleInput(setExcludeFrom)}
+                        style={{ width: '100%' }}
+                        error={false}
+                        supporting-text="Emails from this sender will be hidden"
+                    />
+
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '24px' }}>
+                        <md-text-button onClick={onCancel}>Cancel</md-text-button>
+                        <md-filled-button onClick={handleSave}>
+                            {initialRule ? 'Update' : 'Create'}
+                        </md-filled-button>
                     </div>
                 </div>
-
-
-                {/* Save Button */}
-                <button className="save-btn" onClick={handleSave}>
-                    {initialRule ? 'Update Rule' : 'Create Rule'}
-                </button>
             </div>
         </div>
     );

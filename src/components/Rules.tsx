@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2 } from 'lucide-react';
 import { type Rule } from '../types/Rule';
 import RuleEditor from './RuleEditor';
+import '@material/web/fab/fab.js';
+import '@material/web/icon/icon.js';
+import '@material/web/iconbutton/icon-button.js';
+import '@material/web/list/list.js';
+import '@material/web/textfield/outlined-text-field.js';
+import '@material/web/list/list-item.js';
 
-const Rules: React.FC = () => {
+interface RulesProps {
+    searchQuery: string;
+}
+
+const Rules: React.FC<RulesProps> = ({ searchQuery }) => {
     const [rules, setRules] = useState<Rule[]>([]);
     const [isEditing, setIsEditing] = useState(false);
     const [currentRule, setCurrentRule] = useState<Rule | undefined>(undefined);
@@ -41,6 +50,13 @@ const Rules: React.FC = () => {
         setIsEditing(true);
     };
 
+    const handleDeleteRule = (ruleId: string) => {
+        if (window.confirm('Are you sure you want to delete this rule?')) {
+            const updatedRules = rules.filter(r => r.id !== ruleId);
+            saveRules(updatedRules);
+        }
+    };
+
     const handleSave = (rule: Rule) => {
         let updatedRules;
         if (currentRule) {
@@ -55,42 +71,52 @@ const Rules: React.FC = () => {
     };
 
     const getPastelClass = (index: number) => {
-        // Cycle through pastel colors based on index or tag
         const colors = ['bg-purple-pastel', 'bg-pink-pastel', 'bg-green-pastel', 'bg-blue-pastel'];
         return colors[index % colors.length];
     };
 
+    const filteredRules = rules.filter(rule =>
+        rule.tag.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        rule.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <div className="dashboard-content rules-container">
-            {/* Header removed as per previous request */}
+            <div style={{ marginBottom: '1rem' }}></div>
 
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                {rules.map((rule, index) => (
-                    <div key={rule.id} className="rule-row">
-                        {/* Card */}
-                        <div className={`rule-card ${getPastelClass(index)}`}>
-                            {/* Floating "Window" content */}
-                            <h3 className="rule-title">{rule.tag.replace('_', ' ')}</h3>
-
-                            <p className="rule-desc">{rule.description}</p>
-
-                            <div className="rule-meta">
-                                {rule.criteria.from ? `From: ${rule.criteria.from}` : (rule.criteria.subject || rule.criteria.includes)}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {filteredRules.map((rule, index) => (
+                    <div key={rule.id} className={`rule-card ${getPastelClass(index)}`} style={{ position: 'relative', padding: '16px', borderRadius: '16px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                            <div>
+                                <h3 className="rule-title" style={{ margin: '0 0 8px 0', fontSize: '1.1rem', textTransform: 'capitalize' }}>
+                                    {rule.tag.replace('_', ' ')}
+                                </h3>
+                                <p className="rule-desc" style={{ margin: 0, fontSize: '0.9rem', opacity: 0.8 }}>
+                                    {rule.description}
+                                </p>
+                                <div className="rule-meta" style={{ marginTop: '8px', fontSize: '0.8rem', opacity: 0.6 }}>
+                                    {rule.criteria.from ? `From: ${rule.criteria.from}` : (rule.criteria.subject || rule.criteria.includes)}
+                                </div>
+                            </div>
+                            <div style={{ display: 'flex', gap: '4px' }}>
+                                <md-icon-button onClick={() => handleEditRule(rule)}>
+                                    <md-icon>edit</md-icon>
+                                </md-icon-button>
+                                <md-icon-button onClick={() => handleDeleteRule(rule.id)}>
+                                    <md-icon>delete</md-icon>
+                                </md-icon-button>
                             </div>
                         </div>
-
-                        {/* Edit Button Outside */}
-                        <button onClick={() => handleEditRule(rule)} className="rule-edit-btn-outside">
-                            <Edit2 size={20} color="#1D1D1D" />
-                        </button>
                     </div>
                 ))}
             </div>
 
-            {/* Floating Action Button */}
-            <button className="fab-add" onClick={handleAddRule} title="Add New Rule">
-                <Plus size={32} />
-            </button>
+            <div style={{ position: 'fixed', bottom: '100px', right: '24px', zIndex: 90 }}>
+                <md-fab variant="primary" onClick={handleAddRule}>
+                    <md-icon slot="icon">add</md-icon>
+                </md-fab>
+            </div>
 
             {isEditing && (
                 <RuleEditor

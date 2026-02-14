@@ -9,6 +9,9 @@ export interface ParsedEmail {
     type: 'interview' | 'test' | 'call_letter' | 'shortlist' | 'other';
     institution: string;
     sender: string;
+    to?: string;
+    cc?: string;
+    bcc?: string;
     body?: string;
 }
 
@@ -95,7 +98,7 @@ const getBody = (payload: any): string => {
 
         // Recursive check for nested multipart
         for (const part of payload.parts) {
-            if (part.parts) {
+            if (part?.parts) {
                 const nestedBody = getBody(part);
                 if (nestedBody) return nestedBody;
             }
@@ -106,8 +109,13 @@ const getBody = (payload: any): string => {
 };
 
 export const parseEmail = (email: any): ParsedEmail => {
-    const subject = email.payload.headers.find((h: any) => h.name === 'Subject')?.value || '';
-    const from = email.payload.headers.find((h: any) => h.name === 'From')?.value || '';
+    const headers = email.payload.headers;
+    const subject = headers.find((h: any) => h.name === 'Subject')?.value || '';
+    const from = headers.find((h: any) => h.name === 'From')?.value || '';
+    const to = headers.find((h: any) => h.name === 'To')?.value || '';
+    const cc = headers.find((h: any) => h.name === 'Cc')?.value || '';
+    const bcc = headers.find((h: any) => h.name === 'Bcc')?.value || '';
+
     const snippet = email.snippet;
     const body = getBody(email.payload) || snippet; // Fallback to snippet
     const date = email.internalDate ? new Date(parseInt(email.internalDate)).toISOString() : new Date().toISOString();
@@ -125,7 +133,10 @@ export const parseEmail = (email: any): ParsedEmail => {
     return {
         id: email.id,
         subject,
-        sender: from, // Add sender field
+        sender: from,
+        to,
+        cc,
+        bcc,
         snippet,
         body,
         date,
