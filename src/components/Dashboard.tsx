@@ -14,7 +14,7 @@ import '@material/web/fab/fab.js';
 import { type Rule } from '../types/Rule';
 
 const matchesRule = (email: ParsedEmail, rule: Rule): boolean => {
-    const { from, subject, includes, excludes } = rule.criteria;
+    const { from, subject, includes } = rule.criteria;
     const textToSearch = (email.subject + ' ' + (email.body || '')).toLowerCase();
     const sender = email.sender.toLowerCase();
 
@@ -146,7 +146,7 @@ const Dashboard: React.FC<{ searchQuery?: string; isDark?: boolean }> = ({ searc
             };
 
             currentRules.forEach(rule => {
-                computedStats[rule.tag] = filtered.filter(e => matchesRule(e, rule)).length;
+                computedStats[rule.tag] = filtered.filter((e: ParsedEmail) => matchesRule(e, rule)).length;
             });
 
             setStats(computedStats);
