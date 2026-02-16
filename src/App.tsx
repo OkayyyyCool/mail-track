@@ -4,6 +4,7 @@ import ThemeToggle from './components/ThemeToggle';
 import { useAuth } from './contexts/AuthContext';
 import Dashboard from './components/Dashboard';
 import Rules from './components/Rules';
+import Profile from './components/Profile';
 import { useInstallPrompt } from './hooks/useInstallPrompt';
 import '@material/web/divider/divider.js';
 // styles.css imported in main.tsx
@@ -280,6 +281,30 @@ function App() {
                 </div>
               </div>
 
+              {/* Gemini API Key Button */}
+              <div
+                onClick={() => { setActiveTab('profile'); setShowProfile(false); }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  padding: '12px 16px',
+                  borderRadius: '14px',
+                  cursor: 'pointer',
+                  background: 'linear-gradient(135deg, rgba(123,31,162,0.08), rgba(74,20,140,0.05))',
+                  border: '1px solid rgba(123,31,162,0.15)',
+                  width: '100%',
+                  transition: 'transform 0.1s',
+                }}
+              >
+                <md-icon style={{ color: '#7B1FA2', fontSize: '20px' }}>key</md-icon>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>Gemini API Key</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Set up AI mail analysis</div>
+                </div>
+                <md-icon style={{ color: '#7B1FA2', fontSize: '18px' }}>chevron_right</md-icon>
+              </div>
+
               {/* Centered Logout Button */}
               <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                 {/* @ts-ignore */}
@@ -301,6 +326,7 @@ function App() {
       <main className="main-content" style={{ paddingBottom: '80px' }}>
         {activeTab === 'home' && <Dashboard searchQuery={searchQuery} isDark={isDark} />}
         {activeTab === 'rules' && <Rules searchQuery={searchQuery} />}
+        {activeTab === 'profile' && <Profile />}
       </main>
 
       {/* Inline FABs Navigation */}

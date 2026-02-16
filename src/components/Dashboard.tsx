@@ -14,6 +14,7 @@ import '@material/web/button/filled-tonal-button.js';
 import '@material/web/fab/fab.js';
 
 import { type Rule } from '../types/Rule';
+import MailAnalysis from './MailAnalysis';
 
 const matchesRule = (email: ParsedEmail, rule: Rule): boolean => {
     const { from, subject, includes } = rule.criteria;
@@ -448,6 +449,9 @@ const Dashboard: React.FC<{ searchQuery?: string; isDark?: boolean }> = ({ searc
                                     </div>
                                 )}
                             </div>
+
+                            {/* AI Analysis */}
+                            <MailAnalysis email={selectedEmail} isDark={isDark} />
 
                             {/* Body Content */}
                             <div className="mail-body-container" style={{
